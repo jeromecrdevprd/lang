@@ -1,4 +1,5 @@
 kind: pipeline
+type: docker
 name: default
 
 clone:
@@ -15,7 +16,7 @@ steps:
       CLIENTSCT:
         from_secret: CLIENTSCT
     commands: 
-      - pwsh .\IPM_token.ps1 $TENANTID $CLIENTID $CLIENTSCT
+      - pwsh /drone/src/IPM_token.ps1 $TENANTID $CLIENTID $CLIENTSCT
 
   - name: read
     pull: if-not-exists
