@@ -1,11 +1,8 @@
 kind: pipeline
 type: docker
-name: default
+name: IPM deploy
 
-clone:
-  disable: true
-
-steps:
+steps:    
   - name: Create token
     image: mcr.microsoft.com/powershell:latest
     environment:
@@ -17,7 +14,7 @@ steps:
         from_secret: CLIENTSCT
     commands: 
       - pwsh /drone/src/IPM_token.ps1 $TENANTID $CLIENTID $CLIENTSCT
-
+      
   - name: read
     pull: if-not-exists
     image: alpine
@@ -25,8 +22,7 @@ steps:
       - echo $LANG
       - source .env
       - echo $LANG
-      
-      
+
 trigger:
   branch:
     include:
@@ -35,3 +31,4 @@ trigger:
     include:
       - push
       - pull_request
+      
