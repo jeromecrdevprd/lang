@@ -5,16 +5,22 @@ clone:
   disable: true
 
 steps:
-- name: write
-  pull: if-not-exists
-  image: alpine
-  commands:
-  - echo LANG=en > .env
+  - name: Create token
+    image: mcr.microsoft.com/powershell:latest
+    environment:
+      TENANTID:
+        from_secret: TENANTID
+      CLIENTID:
+        from_secret: CLIENTID
+      CLIENTSCT:
+        from_secret: CLIENTSCT
+    commands: 
+      - pwsh /drone/src/IPM_token.ps1 $TENANTID $CLIENTID $CLIENTSCT
 
-- name: read
-  pull: if-not-exists
-  image: alpine
-  commands:
-  - echo $LANG
-  - source .env
-  - echo $LANG
+  - name: read
+    pull: if-not-exists
+    image: alpine
+    commands:
+    - echo $LANG
+    - source .env
+    - echo $LANG
