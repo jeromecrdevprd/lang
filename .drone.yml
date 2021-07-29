@@ -1,0 +1,20 @@
+kind: pipeline
+name: default
+
+clone:
+  disable: true
+
+steps:
+- name: write
+  pull: if-not-exists
+  image: alpine
+  commands:
+  - echo LANG=en > .env
+
+- name: read
+  pull: if-not-exists
+  image: alpine
+  commands:
+  - echo $LANG
+  - source .env
+  - echo $LANG
