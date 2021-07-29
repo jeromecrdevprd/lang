@@ -25,3 +25,13 @@ steps:
       - echo $LANG
       - source .env
       - echo $LANG
+      
+      
+trigger:
+  branch:
+    include:
+      - master
+  event:
+    include:
+      - push
+      - pull_request
