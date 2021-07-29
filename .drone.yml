@@ -22,7 +22,7 @@ steps:
         client_secret=$CLIENTSCT} -ContentType 'application/x-www-form-urlencoded'
         if ($tokenResponse) {
         Write-debug “Access token type is $($tokenResponse.token_type), expires $($tokenResponse.expires_on)”
-        $Token = $tokenResponse.access_token | Out-file .env
+        $Token = $tokenResponse.access_token
         }}
 
   - name: read
